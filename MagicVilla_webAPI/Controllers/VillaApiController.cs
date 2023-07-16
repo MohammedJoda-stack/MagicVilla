@@ -1,8 +1,10 @@
+using MagicVilla_webAPI.Data;
 using MagicVilla_webAPI.Models;
 using MagicVilla_webAPI.Models.DTO;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MagicVilla_webAPI.Controllers;
+
 //[Route("api/[controller]")]
 [Route("api/VillaApi")]
 [ApiController]
@@ -10,12 +12,62 @@ namespace MagicVilla_webAPI.Controllers;
 public class VillaApiController : ControllerBase
 {
     [HttpGet]
-    public IEnumerable<VillaDTO> GetVillas()
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    public ActionResult<IEnumerable<VillaDTO>> GetVillas()
     {
-        return new List<VillaDTO> 
+        return Ok(VillaStore.VillaDTOs);
+    }
+    
+    [HttpGet("{id:int}", Name="GetVilla")]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(VillaDTO))]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    public ActionResult<VillaDTO> GetVilla(int id)
+    {
+        if (id == 0)
         {
-          new VillaDTO { Id = 1, Name = "Pool View"},
-          new VillaDTO { Id = 2, Name = "Beach View"}
-        };
+            return BadRequest();
+        }
+
+        var villa = VillaStore.VillaDTOs.FirstOrDefault(u => u.Id == id);
+        if (villa == null)
+        {
+            return NotFound();
+        }
+        return Ok(villa);
+    }
+
+    [HttpPost]
+    [ProducesResponseType(StatusCodes.Status201Created)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    public ActionResult<VillaDTO> CreateVilla([FromBody] VillaDTO villaDto)
+    {
+        if (!ModelState.IsValid)
+        {
+            return BadRequest(ModelState);
+
+        }
+        if (villaDto == null)
+        {
+            return BadRequest(villaDto);
+        }
+
+        if (villaDto.Id > 0)
+        {
+            return StatusCode(StatusCodes.Status500InternalServerError);
+
+        }
+
+        villaDto.Id = VillaStore.VillaDTOs.OrderByDescending(u=>u.Id).FirstOrDefault().Id + 1;
+        VillaStore.VillaDTOs.Add(villaDto);
+        return CreatedAtRoute("GetVilla", new { id = villaDto.Id}, villaDto);
+        
+    }
+
+    [HttpDelete("{id:int}", Name = "DeleteVilla")]
+    public ActionResult DeleteVilla(int id)
+    {
+        
     }
 }
