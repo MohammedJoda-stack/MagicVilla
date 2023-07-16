@@ -88,4 +88,16 @@ public class VillaApiController : ControllerBase
         return NoContent();
 
     }
+
+    [HttpPut("{id:int}", Name = "UpdateVilla")]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    public IActionResult UpdateVilla(int id, [FromBody] VillaDTO villaDto)
+    {
+        if (villaDto == null || villaDto.Id != id )
+        {
+            return BadRequest(StatusCodes.Status400BadRequest);
+        }
+
+        var villa = VillaStore.VillaDTOs.FirstOrDefault(u => u.Id == id);
+    }
 }
