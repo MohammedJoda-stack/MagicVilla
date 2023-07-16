@@ -35,3 +35,13 @@
 /home/muhammad/RiderProjects/MagicVilla/MagicVilla_webAPI/bin/Debug/net7.0/Microsoft.AspNetCore.Mvc.NewtonsoftJson.dll
 /home/muhammad/RiderProjects/MagicVilla/MagicVilla_webAPI/bin/Debug/net7.0/Newtonsoft.Json.dll
 /home/muhammad/RiderProjects/MagicVilla/MagicVilla_webAPI/bin/Debug/net7.0/Newtonsoft.Json.Bson.dll
+/home/muhammad/RiderProjects/MagicVilla/MagicVilla_webAPI/bin/Debug/net7.0/Microsoft.Extensions.DependencyModel.dll
+/home/muhammad/RiderProjects/MagicVilla/MagicVilla_webAPI/bin/Debug/net7.0/Serilog.dll
+/home/muhammad/RiderProjects/MagicVilla/MagicVilla_webAPI/bin/Debug/net7.0/Serilog.AspNetCore.dll
+/home/muhammad/RiderProjects/MagicVilla/MagicVilla_webAPI/bin/Debug/net7.0/Serilog.Extensions.Hosting.dll
+/home/muhammad/RiderProjects/MagicVilla/MagicVilla_webAPI/bin/Debug/net7.0/Serilog.Extensions.Logging.dll
+/home/muhammad/RiderProjects/MagicVilla/MagicVilla_webAPI/bin/Debug/net7.0/Serilog.Formatting.Compact.dll
+/home/muhammad/RiderProjects/MagicVilla/MagicVilla_webAPI/bin/Debug/net7.0/Serilog.Settings.Configuration.dll
+/home/muhammad/RiderProjects/MagicVilla/MagicVilla_webAPI/bin/Debug/net7.0/Serilog.Sinks.Console.dll
+/home/muhammad/RiderProjects/MagicVilla/MagicVilla_webAPI/bin/Debug/net7.0/Serilog.Sinks.Debug.dll
+/home/muhammad/RiderProjects/MagicVilla/MagicVilla_webAPI/bin/Debug/net7.0/Serilog.Sinks.File.dll
