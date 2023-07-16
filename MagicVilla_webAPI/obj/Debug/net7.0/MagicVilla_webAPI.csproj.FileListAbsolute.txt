@@ -31,3 +31,7 @@
 /home/muhammad/RiderProjects/MagicVilla/MagicVilla_webAPI/obj/Debug/net7.0/MagicVilla_webAPI.pdb
 /home/muhammad/RiderProjects/MagicVilla/MagicVilla_webAPI/obj/Debug/net7.0/MagicVilla_webAPI.genruntimeconfig.cache
 /home/muhammad/RiderProjects/MagicVilla/MagicVilla_webAPI/obj/Debug/net7.0/ref/MagicVilla_webAPI.dll
+/home/muhammad/RiderProjects/MagicVilla/MagicVilla_webAPI/bin/Debug/net7.0/Microsoft.AspNetCore.JsonPatch.dll
+/home/muhammad/RiderProjects/MagicVilla/MagicVilla_webAPI/bin/Debug/net7.0/Microsoft.AspNetCore.Mvc.NewtonsoftJson.dll
+/home/muhammad/RiderProjects/MagicVilla/MagicVilla_webAPI/bin/Debug/net7.0/Newtonsoft.Json.dll
+/home/muhammad/RiderProjects/MagicVilla/MagicVilla_webAPI/bin/Debug/net7.0/Newtonsoft.Json.Bson.dll
