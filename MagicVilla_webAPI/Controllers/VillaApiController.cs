@@ -66,8 +66,26 @@ public class VillaApiController : ControllerBase
     }
 
     [HttpDelete("{id:int}", Name = "DeleteVilla")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public ActionResult DeleteVilla(int id)
     {
-        
+        if (id == 0 )
+        {
+            return BadRequest(StatusCodes.Status400BadRequest);
+        }
+
+        var villaDto = VillaStore.VillaDTOs.FirstOrDefault(u => u.Id == id);
+        if (villaDto == null)
+        {
+            return NotFound(StatusCodes.Status404NotFound);
+
+            
+        }
+
+        VillaStore.VillaDTOs.Remove(villaDto);
+        return NoContent();
+
     }
 }
