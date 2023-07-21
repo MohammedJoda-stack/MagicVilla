@@ -12,17 +12,19 @@ namespace MagicVilla_webAPI.Controllers;
 
 public class VillaApiController : ControllerBase
 {
+    private readonly ApplicationDbContext db;
      private readonly ILogger<VillaApiController> logger;
-    public VillaApiController( ILogger<VillaApiController> _logger)
+    public VillaApiController( ILogger<VillaApiController> _logger, ApplicationDbContext _db)
     {
         logger = _logger;
+        db = _db;
     }
     [HttpGet]
     [ProducesResponseType(StatusCodes.Status200OK)]
     public ActionResult<IEnumerable<VillaDTO>> GetVillas()
     {
         logger.LogInformation("Get All Villas");
-        return Ok(VillaStore.VillaDTOs);
+        return Ok(db.Villas.ToList());
     }
     
     [HttpGet("{id:int}", Name="GetVilla")]
@@ -37,7 +39,7 @@ public class VillaApiController : ControllerBase
             return BadRequest();
         }
 
-        var villa = VillaStore.VillaDTOs.FirstOrDefault(u => u.Id == id);
+        var villa = db.Villas.FirstOrDefault(u => u.Id == id);
         if (villa == null)
         {
             return NotFound();
@@ -67,7 +69,7 @@ public class VillaApiController : ControllerBase
 
         }
 
-        villaDto.Id = VillaStore.VillaDTOs.OrderByDescending(u=>u.Id).FirstOrDefault().Id + 1;
+        villaDto.Id = db.Villas.OrderByDescending(u=>u.Id).FirstOrDefault().Id + 1;
         VillaStore.VillaDTOs.Add(villaDto);
         return CreatedAtRoute("GetVilla", new { id = villaDto.Id}, villaDto);
         
@@ -84,7 +86,7 @@ public class VillaApiController : ControllerBase
             return BadRequest(StatusCodes.Status400BadRequest);
         }
 
-        var villaDto = VillaStore.VillaDTOs.FirstOrDefault(u => u.Id == id);
+        var villaDto = db.Villas.FirstOrDefault(u => u.Id == id);
         if (villaDto == null)
         {
             return NotFound(StatusCodes.Status404NotFound);
@@ -92,7 +94,7 @@ public class VillaApiController : ControllerBase
             
         }
 
-        VillaStore.VillaDTOs.Remove(villaDto);
+        db.Villas.Remove(villaDto);
         return NoContent();
 
     }
@@ -100,17 +102,17 @@ public class VillaApiController : ControllerBase
     [HttpPut("{id:int}", Name = "UpdateVilla")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public IActionResult UpdateVilla(int id, [FromBody] VillaDTO villaDto)
+    public IActionResult UpdateVilla(int id, [FromBody] Villa villaObj)
     {
-        if (villaDto == null || villaDto.Id != id )
+        if (villaObj== null || villaObj.Id != id )
         {
             return BadRequest(StatusCodes.Status400BadRequest);
         }
 
-        var villa = VillaStore.VillaDTOs.FirstOrDefault(u => u.Id == id);
-        villa.Name = villaDto.Name;
-        villa.Occupancy = villaDto.Occupancy;
-        villa.Sqft = villaDto.Sqft;
+        var villa = db.Villas.FirstOrDefault(u => u.Id == id);
+        villa.Name = villaObj.Name;
+        villa.Occupancy = villaObj.Occupancy;
+        villa.Sqft = villaObj.Sqft;
 
         return NoContent();
     }
@@ -118,14 +120,14 @@ public class VillaApiController : ControllerBase
     [HttpPatch("{id:int}", Name = "UpdatePartialVilla")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public IActionResult UpdatePartialVilla(int id, JsonPatchDocument<VillaDTO> patchDto)
+    public IActionResult UpdatePartialVilla(int id, JsonPatchDocument<Villa> patchDto)
     {
         if (patchDto == null || id == 0)
         {
             return BadRequest();
         }
 
-        var villa = VillaStore.VillaDTOs.FirstOrDefault(u => u.Id == id);
+        var villa = db.Villas.FirstOrDefault(u => u.Id == id);
         if (villa == null)
         {
             return BadRequest();
