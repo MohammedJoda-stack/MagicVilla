@@ -9,5 +9,6 @@ public interface IRepository
     Task<Villa> GetAsync(Expression<Func<Villa,bool>> filter = null, bool tracked =true);
     Task CreateAsync(Villa entity);
     Task RemoveAsync(Villa entity);
+    Task UpdateAsync(Villa entity);
     Task SaveAsync();
 }

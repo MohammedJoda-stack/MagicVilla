@@ -2,6 +2,7 @@ using AutoMapper;
 using MagicVilla_webAPI.Data;
 using MagicVilla_webAPI.Models;
 using MagicVilla_webAPI.Models.DTO;
+using MagicVilla_webAPI.Repository;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -14,13 +15,13 @@ namespace MagicVilla_webAPI.Controllers;
 
 public class VillaApiController : ControllerBase
 {
-    private readonly ApplicationDbContext db;
+    private readonly IRepository dbVilla;
      private readonly ILogger<VillaApiController> logger;
      private readonly IMapper mapper;
-    public VillaApiController( ILogger<VillaApiController> _logger, ApplicationDbContext _db, IMapper _mapper)
+    public VillaApiController( ILogger<VillaApiController> _logger, IRepository _dbVilla, IMapper _mapper)
     {
         logger = _logger;
-        db = _db;
+        dbVilla = _dbVilla;
         mapper = _mapper;
     }
     [HttpGet]
@@ -28,7 +29,7 @@ public class VillaApiController : ControllerBase
     public async Task<ActionResult<IEnumerable<VillaDTO>>> GetVillas()
     {
         logger.LogInformation("Get All Villas");
-        IEnumerable<Villa> villaList = await db.Villas.ToListAsync(); 
+        IEnumerable<Villa> villaList = await dbVilla.GetAllAsync(); 
         return Ok( mapper.Map<List<VillaDTO>>(villaList) );
     }
     
@@ -44,7 +45,7 @@ public class VillaApiController : ControllerBase
             return BadRequest();
         }
 
-        var villa = await db.Villas.FirstOrDefaultAsync(u => u.Id == id);
+        var villa = await dbVilla.GetAsync(u => u.Id == id);
         if (villa == null)
         {
             return NotFound();
@@ -64,7 +65,7 @@ public class VillaApiController : ControllerBase
 
         //}
 
-        if (await db.Villas.FirstOrDefaultAsync(u=>u.Name.ToLower() == createDto.Name.ToLower()) !=null)
+        if (await dbVilla.GetAsync(u=>u.Name.ToLower() == createDto.Name.ToLower()) !=null)
         {
             ModelState.AddModelError("Custom Errors", "Customer already Exists");
         }
@@ -93,8 +94,8 @@ public class VillaApiController : ControllerBase
         //     Details = createDto.Details,
         //     ImageUrl = createDto.ImageUrl
         // };
-        await db.Villas.AddAsync(model);
-        await db.SaveChangesAsync();
+        await dbVilla.CreateAsync(model);
+        await dbVilla.SaveAsync();
             // VillaStore.VillaDTOs.Add(villaDto);
         return CreatedAtRoute("GetVilla", new { id = model.Id}, createDto);
         
@@ -111,7 +112,7 @@ public class VillaApiController : ControllerBase
             return BadRequest(StatusCodes.Status400BadRequest);
         }
 
-        var villa= db.Villas.FirstOrDefault(u => u.Id == id);
+        var villa=  dbVilla.GetAsync(u => u.Id == id);
         if (villa == null)
         {
             return NotFound(StatusCodes.Status404NotFound);
@@ -119,8 +120,8 @@ public class VillaApiController : ControllerBase
             
         }
 
-        db.Villas.Remove(villa);
-        db.SaveChanges();
+        dbVilla.RemoveAsync(villa.Result);
+      
         return NoContent();
 
     }
@@ -151,8 +152,8 @@ public class VillaApiController : ControllerBase
        // villa.Name = villaObj.Name;
        //  villa.Occupancy = villaObj.Occupancy;
         //villa.Sqft = villaObj.Sqft;
-        db.Villas.Update(model);
-        db.SaveChanges();
+        dbVilla.UpdateAsync(model);
+        
         return NoContent();
     }
 
@@ -166,7 +167,7 @@ public class VillaApiController : ControllerBase
             return BadRequest();
         }
 
-        var villa = await db.Villas.AsNoTracking().FirstOrDefaultAsync(u => u.Id == id);
+        var villa = await dbVilla.GetAsync(u => u.Id == id, tracked:false);
         if (villa == null)
         {
             return BadRequest();
@@ -202,8 +203,8 @@ public class VillaApiController : ControllerBase
         //     Details = villaDto.Details,
         //     ImageUrl = villaDto.ImageUrl
         // };
-        db.Villas.Update(model);
-        await db.SaveChangesAsync();
+        await dbVilla.UpdateAsync(model);
+        
         return NoContent();
         
     }

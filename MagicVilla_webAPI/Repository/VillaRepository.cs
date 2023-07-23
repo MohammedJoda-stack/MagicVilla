@@ -53,6 +53,12 @@ public class VillaRepository : IRepository
          await SaveAsync();
     }
 
+    public async Task UpdateAsync(Villa entity)
+    {
+        db.Villas.Update(entity);
+        await SaveAsync();
+    }
+
     public async Task SaveAsync()
     {
         await db.SaveChangesAsync();
