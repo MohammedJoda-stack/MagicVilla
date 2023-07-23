@@ -1,3 +1,4 @@
+using MagicVilla_webAPI;
 using MagicVilla_webAPI.Data;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
@@ -8,6 +9,7 @@ Log.Logger = new LoggerConfiguration().MinimumLevel.Debug()
 builder.Host.UseSerilog();
 // Add services to the container.
 builder.Services.AddControllers().AddNewtonsoftJson();
+builder.Services.AddAutoMapper(typeof(MappingConfig));
 builder.Services.AddDbContext<ApplicationDbContext>(option =>
 {
     option.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
