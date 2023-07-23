@@ -705,3 +705,6 @@ WHERE [Id] = @p0;
 2023-07-23 20:55:28.410 +01:00 [DBG] Connection id "0HMSBMMN8FT4B" disconnecting.
 2023-07-23 20:55:28.410 +01:00 [DBG] Connection id "0HMSBMMN8FT4B" stopped.
 2023-07-23 20:55:28.410 +01:00 [DBG] Connection id "0HMSBMMN8FT4B" sending FIN because: "The Socket transport's send loop completed gracefully."
+2023-07-23 21:06:01.992 +01:00 [INF] Application is shutting down...
+2023-07-23 21:06:01.993 +01:00 [DBG] Hosting stopping
+2023-07-23 21:06:02.001 +01:00 [DBG] Hosting stopped

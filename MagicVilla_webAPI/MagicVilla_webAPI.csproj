@@ -25,6 +25,19 @@
     <ItemGroup>
       <Compile Remove="Controllers\WeatherForecastController.cs" />
       <Compile Remove="WeatherForecast.cs" />
+      <Compile Remove="Repository\VillaRepository\**" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <EmbeddedResource Remove="Repository\VillaRepository\**" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Content Remove="Repository\VillaRepository\**" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Remove="Repository\VillaRepository\**" />
     </ItemGroup>
 
 </Project>
