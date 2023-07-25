@@ -1,3 +1,4 @@
+using System.Net;
 using AutoMapper;
 using MagicVilla_webAPI.Data;
 using MagicVilla_webAPI.Models;
@@ -15,6 +16,7 @@ namespace MagicVilla_webAPI.Controllers;
 
 public class VillaApiController : ControllerBase
 {
+    protected APiResponse response;
     private readonly IVillaRepository dbVilla;
      private readonly ILogger<VillaApiController> logger;
      private readonly IMapper mapper;
@@ -23,21 +25,24 @@ public class VillaApiController : ControllerBase
         logger = _logger;
         dbVilla = _dbVilla;
         mapper = _mapper;
+        this.response = new ();
     }
     [HttpGet]
     [ProducesResponseType(StatusCodes.Status200OK)]
-    public async Task<ActionResult<IEnumerable<VillaDTO>>> GetVillas()
+    public async Task<ActionResult<APiResponse>> GetVillas()
     {
         logger.LogInformation("Get All Villas");
-        IEnumerable<Villa> villaList = await dbVilla.GetAllAsync(); 
-        return Ok( mapper.Map<List<VillaDTO>>(villaList) );
+        IEnumerable<Villa> villaList = await dbVilla.GetAllAsync();
+        response.Result = mapper.Map<List<VillaDTO>>(villaList);
+        response.StatusCode = HttpStatusCode.OK;
+        return Ok(response);
     }
     
     [HttpGet("{id:int}", Name="GetVilla")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(VillaDTO))]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<ActionResult<VillaDTO>> GetVilla(int id)
+    public async Task<ActionResult<APiResponse>> GetVilla(int id)
     {
         if (id == 0)
         {
@@ -50,14 +55,17 @@ public class VillaApiController : ControllerBase
         {
             return NotFound();
         }
-        return Ok(mapper.Map<VillaDTO>(villa));
+        response.Result = mapper.Map<VillaDTO>(villa);
+        response.StatusCode = HttpStatusCode.OK;
+        response.IsSuccess = true;
+        return Ok(response);
     }
 
     [HttpPost]
     [ProducesResponseType(StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<ActionResult<VillaDTO>> CreateVilla([FromBody] VillaCreateDto createDto)
+    public async Task<ActionResult<APiResponse>> CreateVilla([FromBody] VillaCreateDto createDto)
     {
        // if (!ModelState.IsValid)
         //{
@@ -82,7 +90,7 @@ public class VillaApiController : ControllerBase
 
         //villaDto.Id = db.Villas.OrderByDescending(u=>u.Id).FirstOrDefault().Id + 1;
 
-        Villa model = mapper.Map<Villa>(createDto);
+        Villa villa = mapper.Map<Villa>(createDto);
         // Villa model = new ()
         // {
         //   
@@ -94,10 +102,14 @@ public class VillaApiController : ControllerBase
         //     Details = createDto.Details,
         //     ImageUrl = createDto.ImageUrl
         // };
-        await dbVilla.CreateAsync(model);
+        await dbVilla.CreateAsync(villa);
+        
         await dbVilla.SaveAsync();
+        response.Result = mapper.Map<VillaDTO>(villa);
+        response.StatusCode = HttpStatusCode.Created;
+        response.IsSuccess = true;
             // VillaStore.VillaDTOs.Add(villaDto);
-        return CreatedAtRoute("GetVilla", new { id = model.Id}, createDto);
+        return CreatedAtRoute("GetVilla", new { id = villa.Id}, response);
         
     }
 
@@ -123,8 +135,9 @@ public class VillaApiController : ControllerBase
         }
 
         dbVilla.RemoveAsync(villaResult);
-      
-        return NoContent();
+        response.StatusCode = HttpStatusCode.NoContent;
+        response.IsSuccess = true;
+        return Ok(response);
 
     }
 
@@ -155,8 +168,10 @@ public class VillaApiController : ControllerBase
        //  villa.Occupancy = villaObj.Occupancy;
         //villa.Sqft = villaObj.Sqft;
         dbVilla.UpdateAsync(model);
+        response.StatusCode = HttpStatusCode.NoContent;
+        response.IsSuccess = true;
         
-        return NoContent();
+        return Ok(response);
     }
 
     [HttpPatch("{id:int}", Name = "UpdatePartialVilla")]
