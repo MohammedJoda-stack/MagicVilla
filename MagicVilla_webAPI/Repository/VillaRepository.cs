@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace MagicVilla_webAPI.Repository;
 
-public class VillaRepository : IRepository
+public class VillaRepository : IVillaRepository
 {
     private readonly ApplicationDbContext db;
     

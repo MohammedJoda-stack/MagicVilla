@@ -15,10 +15,10 @@ namespace MagicVilla_webAPI.Controllers;
 
 public class VillaApiController : ControllerBase
 {
-    private readonly IRepository dbVilla;
+    private readonly IVillaRepository dbVilla;
      private readonly ILogger<VillaApiController> logger;
      private readonly IMapper mapper;
-    public VillaApiController( ILogger<VillaApiController> _logger, IRepository _dbVilla, IMapper _mapper)
+    public VillaApiController( ILogger<VillaApiController> _logger, IVillaRepository _dbVilla, IMapper _mapper)
     {
         logger = _logger;
         dbVilla = _dbVilla;
@@ -112,15 +112,17 @@ public class VillaApiController : ControllerBase
             return BadRequest(StatusCodes.Status400BadRequest);
         }
 
-        var villa=  dbVilla.GetAsync(u => u.Id == id);
-        if (villa == null)
+        //var villa=  dbVilla.GetAsync(u => u.Id == id);
+        var villa =  dbVilla.GetAsync(u => u.Id == id);
+        var villaResult = villa.Result;
+        if (villaResult == null)
         {
             return NotFound(StatusCodes.Status404NotFound);
 
             
         }
 
-        dbVilla.RemoveAsync(villa.Result);
+        dbVilla.RemoveAsync(villaResult);
       
         return NoContent();
 
