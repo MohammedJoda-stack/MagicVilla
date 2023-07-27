@@ -12,6 +12,7 @@ builder.Host.UseSerilog();
 builder.Services.AddControllers().AddNewtonsoftJson();
 builder.Services.AddAutoMapper(typeof(MappingConfig));
 builder.Services.AddScoped<IVillaRepository, VillaRepository>();
+builder.Services.AddScoped<IVillaNumberRepository, VillaNumberRepository>();
 builder.Services.AddDbContext<ApplicationDbContext>(option =>
 {
     option.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));

@@ -73,7 +73,7 @@ namespace MagicVilla_webAPI.Migrations
                         {
                             Id = 1,
                             Amenity = "",
-                            CreatedDate = new DateTime(2023, 7, 21, 7, 16, 57, 879, DateTimeKind.Local).AddTicks(8291),
+                            CreatedDate = new DateTime(2023, 7, 27, 19, 7, 23, 503, DateTimeKind.Local).AddTicks(3726),
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Details = "Fusce 11 tincidunt maximus leo, sed scelerisque massa auctor sit amet. Donec ex mauris, hendrerit quis nibh ac, efficitur fringilla enim.",
                             ImageUrl = "https://dotnetmasteryimages.blob.core.windows.net/bluevillaimages/villa3.jpg",
@@ -87,7 +87,7 @@ namespace MagicVilla_webAPI.Migrations
                         {
                             Id = 2,
                             Amenity = "",
-                            CreatedDate = new DateTime(2023, 7, 21, 7, 16, 57, 879, DateTimeKind.Local).AddTicks(8340),
+                            CreatedDate = new DateTime(2023, 7, 27, 19, 7, 23, 503, DateTimeKind.Local).AddTicks(3775),
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Details = "Fusce 11 tincidunt maximus leo, sed scelerisque massa auctor sit amet. Donec ex mauris, hendrerit quis nibh ac, efficitur fringilla enim.",
                             ImageUrl = "https://dotnetmasteryimages.blob.core.windows.net/bluevillaimages/villa1.jpg",
@@ -101,7 +101,7 @@ namespace MagicVilla_webAPI.Migrations
                         {
                             Id = 3,
                             Amenity = "",
-                            CreatedDate = new DateTime(2023, 7, 21, 7, 16, 57, 879, DateTimeKind.Local).AddTicks(8344),
+                            CreatedDate = new DateTime(2023, 7, 27, 19, 7, 23, 503, DateTimeKind.Local).AddTicks(3779),
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Details = "Fusce 11 tincidunt maximus leo, sed scelerisque massa auctor sit amet. Donec ex mauris, hendrerit quis nibh ac, efficitur fringilla enim.",
                             ImageUrl = "https://dotnetmasteryimages.blob.core.windows.net/bluevillaimages/villa4.jpg",
@@ -115,7 +115,7 @@ namespace MagicVilla_webAPI.Migrations
                         {
                             Id = 4,
                             Amenity = "",
-                            CreatedDate = new DateTime(2023, 7, 21, 7, 16, 57, 879, DateTimeKind.Local).AddTicks(8348),
+                            CreatedDate = new DateTime(2023, 7, 27, 19, 7, 23, 503, DateTimeKind.Local).AddTicks(3782),
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Details = "Fusce 11 tincidunt maximus leo, sed scelerisque massa auctor sit amet. Donec ex mauris, hendrerit quis nibh ac, efficitur fringilla enim.",
                             ImageUrl = "https://dotnetmasteryimages.blob.core.windows.net/bluevillaimages/villa5.jpg",
@@ -129,7 +129,7 @@ namespace MagicVilla_webAPI.Migrations
                         {
                             Id = 5,
                             Amenity = "",
-                            CreatedDate = new DateTime(2023, 7, 21, 7, 16, 57, 879, DateTimeKind.Local).AddTicks(8351),
+                            CreatedDate = new DateTime(2023, 7, 27, 19, 7, 23, 503, DateTimeKind.Local).AddTicks(3786),
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Details = "Fusce 11 tincidunt maximus leo, sed scelerisque massa auctor sit amet. Donec ex mauris, hendrerit quis nibh ac, efficitur fringilla enim.",
                             ImageUrl = "https://dotnetmasteryimages.blob.core.windows.net/bluevillaimages/villa2.jpg",
@@ -139,6 +139,26 @@ namespace MagicVilla_webAPI.Migrations
                             Sqft = 1100,
                             UpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         });
+                });
+
+            modelBuilder.Entity("MagicVilla_webAPI.Models.VillaNumber", b =>
+                {
+                    b.Property<string>("VillaNo")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Details")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("ModifiedDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("VillaNo");
+
+                    b.ToTable("VillaNumbers");
                 });
 #pragma warning restore 612, 618
         }
