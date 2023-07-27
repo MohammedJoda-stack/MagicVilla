@@ -77,6 +77,46 @@ new Villa
                   Amenity = "",
                   CreatedDate = DateTime.Now
               }            );
+        
+        
+        modelBuilder.Entity<VillaNumber>().HasData(
+new VillaNumber()
+              {
+                  VillaNo= 1,
+                
+                  Details = "Fusce 11 tincidunt maximus leo, sed scelerisque massa auctor sit amet. Donec ex mauris, hendrerit quis nibh ac, efficitur fringilla enim.",
+                 
+                  CreatedDate = DateTime.Now
+              },
+              new VillaNumber()
+              {
+                  VillaNo = 2,
+                  
+                  Details = "Fusce 11 tincidunt maximus leo, sed scelerisque massa auctor sit amet. Donec ex mauris, hendrerit quis nibh ac, efficitur fringilla enim.",
+                                   CreatedDate = DateTime.Now
+              },
+              new VillaNumber()
+              {
+                  VillaNo = 3,
+                  
+                  Details = "Fusce 11 tincidunt maximus leo, sed scelerisque massa auctor sit amet. Donec ex mauris, hendrerit quis nibh ac, efficitur fringilla enim.",
+                  
+                  CreatedDate = DateTime.Now
+              },
+              new VillaNumber()
+              {
+                  VillaNo = 4,
+                  
+                  Details = "Fusce 11 tincidunt maximus leo, sed scelerisque massa auctor sit amet. Donec ex mauris, hendrerit quis nibh ac, efficitur fringilla enim.",
+                  CreatedDate = DateTime.Now
+              },
+              new VillaNumber()
+              {
+                  VillaNo = 5,
+                  
+                  Details = "Fusce 11 tincidunt maximus leo, sed scelerisque massa auctor sit amet. Donec ex mauris, hendrerit quis nibh ac, efficitur fringilla enim.",
+                                    CreatedDate = DateTime.Now
+              }            );
     }
 
 }
