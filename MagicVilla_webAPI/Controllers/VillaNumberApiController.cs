@@ -47,11 +47,11 @@ public class VillaNumberApiController : ControllerBase
 
     }
 
-    [HttpGet("{id:int}", Name = "GetVillaNumbers")]
+    [HttpGet("{id:int}", Name = "GetVillaNumber")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<ActionResult<APiResponse>> GetVillaNumbers(int id)
+    public async Task<ActionResult<APiResponse>> GetVillaNumber(int id)
     {
         if (id == 0)
         {
@@ -89,6 +89,71 @@ public class VillaNumberApiController : ControllerBase
 
             return BadRequest(response);
         }
+
+        if (createDto == null)
+        {
+            response.IsSuccess = false;
+            response.ErrorMessages = new List<string>()
+            {
+                new string("not found")
+            };
+        }
+
+        VillaNumber villaNumber = mapper.Map<VillaNumber>(createDto);
+        await dbVillaNumber.CreateAsync(villaNumber);
+        
+        
+        
+        await dbVillaNumber.SaveAsync();
+        response.Result = mapper.Map<VillaNumberDto>(villaNumber);
+        response.StatusCode = HttpStatusCode.Created;
+        response.IsSuccess = true;
+        // VillaStore.VillaDTOs.Add(villaDto);
+        return CreatedAtRoute("GetVillaNumber", new { id = villaNumber.VillaNo}, response);
+
+    }
+
+    [HttpDelete("{id:int}", Name = "DeleteVillaNumber")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    public ActionResult<APiResponse> DeleteVillaNumber(int id)
+    {
+        if (id == 0)
+        {
+            return BadRequest(StatusCodes.Status400BadRequest);
+        }
+
+        var villaNumber = dbVillaNumber.GetAsync(u => u.VillaNo == id);
+        var villaNumberResult = villaNumber.Result;
+        if (villaNumberResult == null)
+        {
+            return NotFound(StatusCodes.Status404NotFound);
+        }
+
+         dbVillaNumber.RemoveAsync(villaNumberResult);
+         response.StatusCode = HttpStatusCode.NoContent;
+         response.IsSuccess = true;
+         return Ok(response);
+    }
+
+    [HttpPut("{id:int}", Name = "UpdateVillaNumber")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    public ActionResult<APiResponse> UpdateVillaNumber(int id, [FromBody] VillaNumberUpdateDto updateDto)
+    {
+        if (id != updateDto.VillaNo || updateDto == null)
+        {
+            return BadRequest(StatusCodes.Status400BadRequest);
+        }
+
+        VillaNumber model = mapper.Map<VillaNumber>(updateDto);
+        dbVillaNumber.UpdateAsync(model);
+        response.StatusCode = HttpStatusCode.NoContent;
+        response.IsSuccess = true;
+        
+        return Ok(response);
         
     }
 

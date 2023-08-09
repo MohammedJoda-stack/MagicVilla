@@ -83,6 +83,7 @@ new Villa
 new VillaNumber()
               {
                   VillaNo= 1,
+                  VillaId = 1,
                 
                   Details = "Fusce 11 tincidunt maximus leo, sed scelerisque massa auctor sit amet. Donec ex mauris, hendrerit quis nibh ac, efficitur fringilla enim.",
                  
@@ -91,6 +92,7 @@ new VillaNumber()
               new VillaNumber()
               {
                   VillaNo = 2,
+                  VillaId = 2,
                   
                   Details = "Fusce 11 tincidunt maximus leo, sed scelerisque massa auctor sit amet. Donec ex mauris, hendrerit quis nibh ac, efficitur fringilla enim.",
                                    CreatedDate = DateTime.Now
@@ -98,7 +100,7 @@ new VillaNumber()
               new VillaNumber()
               {
                   VillaNo = 3,
-                  
+                  VillaId = 1,
                   Details = "Fusce 11 tincidunt maximus leo, sed scelerisque massa auctor sit amet. Donec ex mauris, hendrerit quis nibh ac, efficitur fringilla enim.",
                   
                   CreatedDate = DateTime.Now
@@ -106,14 +108,14 @@ new VillaNumber()
               new VillaNumber()
               {
                   VillaNo = 4,
-                  
+                  VillaId = 2,
                   Details = "Fusce 11 tincidunt maximus leo, sed scelerisque massa auctor sit amet. Donec ex mauris, hendrerit quis nibh ac, efficitur fringilla enim.",
                   CreatedDate = DateTime.Now
               },
               new VillaNumber()
               {
                   VillaNo = 5,
-                  
+                  VillaId = 2,
                   Details = "Fusce 11 tincidunt maximus leo, sed scelerisque massa auctor sit amet. Donec ex mauris, hendrerit quis nibh ac, efficitur fringilla enim.",
                                     CreatedDate = DateTime.Now
               }            );
